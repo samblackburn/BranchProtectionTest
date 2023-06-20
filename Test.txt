@@ -1,1 +1,2 @@
+changes 2
 Changed on branch foo
