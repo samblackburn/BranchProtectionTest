@@ -13,8 +13,16 @@ jobs:
     environment: live
     steps:
       - uses: actions/checkout@v3
-      - name: Run a one-line script
+      - name: Show that we have access to the secret and environment variable
         env: 
           super_secret: ${{ secrets.SUPER_SECRET_THING }}
           env_var: ${{ vars.LIVE_ENVIRONMENT_VARIABLE }}
         run: echo $super_secret $env_var
+      - name: Update version.txt
+        run: |
+          version=$(cat version.txt)
+          echo $((version+1)) > version.txt
+          echo "Written new version to file:"
+          cat version.txt
+          git commit -am "Increment version"
+          git push
