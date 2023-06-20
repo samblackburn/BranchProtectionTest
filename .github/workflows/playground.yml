@@ -1,0 +1,12 @@
+name: Simulate a releasy thing
+
+on:
+  workflow_dispatch:
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Show that we have access to the secret and environment variable
+        run: echo hello
