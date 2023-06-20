@@ -37,4 +37,4 @@ jobs:
            GH_TOKEN: ${{ secrets.SAMS_GITHUB_TOKEN }}
         run: |
           gh pr review --approve
-          gh pr merge
+          gh pr merge --merge
