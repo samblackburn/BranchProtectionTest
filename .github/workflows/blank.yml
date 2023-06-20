@@ -37,4 +37,8 @@ jobs:
            GH_TOKEN: ${{ secrets.SAMS_GITHUB_TOKEN }}
         run: |
           gh pr review --approve
+      - name: Merge PR as GH Actions bot
+        env:
+           GH_TOKEN: ${{ github.token }}
+        run: |
           gh pr merge --merge
