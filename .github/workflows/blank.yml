@@ -10,6 +10,7 @@ on:
 jobs:
   release:
     runs-on: ubuntu-latest
+    environment: live
     steps:
       - uses: actions/checkout@v3
       - name: Run a one-line script
