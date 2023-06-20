@@ -19,6 +19,8 @@ jobs:
           env_var: ${{ vars.LIVE_ENVIRONMENT_VARIABLE }}
         run: echo $super_secret $env_var
       - name: Update version.txt
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
           version=$(cat version.txt)
           echo $((version+1)) > version.txt
