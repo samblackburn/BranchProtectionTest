@@ -31,14 +31,14 @@ jobs:
           git checkout -b auto-release
           git commit -am "Increment version"
           git push -u origin auto-release --force
-          gh pr create --fill
+          gh pr create --title "bump version" --body "this PR created automatically"
       - name: Approve PR as Sam
         env:
            GH_TOKEN: ${{ secrets.SAMS_GITHUB_TOKEN }}
         run: |
-          gh pr review --approve
+          gh pr review --approve --body "This approval added automatically"
       - name: Merge PR as GH Actions bot
         env:
            GH_TOKEN: ${{ github.token }}
         run: |
-          gh pr merge --merge
+          gh pr merge --merge --body "Merging automatically"
