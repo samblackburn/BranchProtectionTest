@@ -1,0 +1,44 @@
+name: Simulate a releasy thing
+
+on:
+  push:
+    branches: [ "main" ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    environment: live
+    steps:
+      - uses: actions/checkout@v3
+      - name: Show that we have access to the secret and environment variable
+        env: 
+          super_secret: ${{ secrets.SUPER_SECRET_THING }}
+          env_var: ${{ vars.LIVE_ENVIRONMENT_VARIABLE }}
+        run: echo $super_secret $env_var
+      - name: Update version.txt
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          version=$(cat version.txt)
+          echo $((version+1)) > version.txt
+          echo "Written new version to file:"
+          cat version.txt
+          git config --global user.email "you@example.com"
+          git config --global user.name "Your Name"
+          git checkout -b auto-release
+          git commit -am "Increment version"
+          git push -u origin auto-release --force
+          gh pr create --fill
+      - name: Approve PR as Sam
+        env:
+           GH_TOKEN: ${{ secrets.SAMS_GITHUB_TOKEN }}
+        run: |
+          gh pr review --approve
+      - name: Merge PR as GH Actions bot
+        env:
+           GH_TOKEN: ${{ github.token }}
+        run: |
+          gh pr merge --merge
