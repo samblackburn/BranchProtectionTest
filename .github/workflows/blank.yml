@@ -26,5 +26,9 @@ jobs:
           cat version.txt
           git config --global user.email "you@example.com"
           git config --global user.name "Your Name"
+          git checkout -b auto-release
           git commit -am "Increment version"
-          git push
+          git push -u origin auto-release
+          gh pr create
+          gh pr review --approve
+          gh pr merge
