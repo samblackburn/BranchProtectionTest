@@ -15,4 +15,5 @@ jobs:
       - name: Run a one-line script
         env: 
           super_secret: ${{ secrets.SUPER_SECRET_THING }}
-        run: echo $super_secret
+          env_var: ${{ vars.REPOSITORY_VAR }}
+        run: echo $super_secret $env_var
