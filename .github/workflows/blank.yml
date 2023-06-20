@@ -13,4 +13,6 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Run a one-line script
-        run: echo ${{ secrets.SUPER_SECRET_THING }}
+        env: 
+          super_secret: ${{ secrets.SUPER_SECRET_THING }}
+        run: echo $super_secret
