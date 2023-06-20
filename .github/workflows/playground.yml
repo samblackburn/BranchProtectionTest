@@ -1,12 +1,17 @@
 name: Playground
 
 on:
+  pull_request:
+    branches: [ "!main" ]
   workflow_dispatch:
-
 jobs:
-  release:
+  approve:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Show that we have access to the secret and environment variable
-        run: echo hello
+      - name: Approve pr
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh pr review --approve
+          gh pr merge --merge
