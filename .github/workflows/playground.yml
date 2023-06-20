@@ -1,4 +1,4 @@
-name: Simulate a releasy thing
+name: Playground
 
 on:
   workflow_dispatch:
