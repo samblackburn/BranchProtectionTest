@@ -32,9 +32,9 @@ jobs:
           git commit -am "Increment version"
           git push -u origin auto-release --force
           gh pr create --fill
-          gh pr review --approve
       - name: Approve PR as Sam
         env:
            GH_TOKEN: ${{ secrets.SAMS_GITHUB_TOKEN }}
         run: |
-           gh pr merge
+          gh pr review --approve
+          gh pr merge
