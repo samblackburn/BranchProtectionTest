@@ -31,6 +31,6 @@ jobs:
           git checkout -b auto-release
           git commit -am "Increment version"
           git push -u origin auto-release --force
-          gh pr create
+          gh pr create --fill
           gh pr review --approve
           gh pr merge
