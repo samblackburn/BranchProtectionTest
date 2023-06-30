@@ -13,15 +13,9 @@ jobs:
     environment: live
     steps:
       - uses: actions/checkout@v3
-      - name: Get token
-        id: get_token
-        uses: machine-learning-apps/actions-app-token@master
-        with:
-          APP_PEM: ${{ secrets.APP_PEM }}
-          APP_ID: ${{ secrets.APP_ID }}
       - name: Update version.txt
         env: 
-          GH_TOKEN: ${{ steps.get_token.outputs.app_token }}
+          GH_TOKEN: ${{ APP_TOKEN }}
         run: |
           version=$(cat version.txt)
           echo $((version+1)) > version.txt
