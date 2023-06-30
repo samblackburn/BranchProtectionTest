@@ -13,14 +13,15 @@ jobs:
     environment: live
     steps:
       - uses: actions/checkout@v3
-      - name: Show that we have access to the secret and environment variable
-        env: 
-          super_secret: ${{ secrets.SUPER_SECRET_THING }}
-          env_var: ${{ vars.LIVE_ENVIRONMENT_VARIABLE }}
-        run: echo $super_secret $env_var
+      - name: Get token
+        id: get_token
+        uses: machine-learning-apps/actions-app-token@master
+        with:
+          APP_PEM: ${{ secrets.APP_PEM }}
+          APP_ID: ${{ secrets.APP_ID }}
       - name: Update version.txt
-        env:
-          GH_TOKEN: ${{ github.token }}
+        env: 
+          GH_TOKEN: ${{ steps.get_token.outputs.app_token }}
         run: |
           version=$(cat version.txt)
           echo $((version+1)) > version.txt
@@ -32,13 +33,5 @@ jobs:
           git commit -am "Increment version"
           git push -u origin auto-release --force
           gh pr create --title "bump version" --body "this PR created automatically"
-      - name: Approve PR as Sam
-        env:
-           GH_TOKEN: ${{ secrets.SAMS_GITHUB_TOKEN }}
-        run: |
           gh pr review --approve --body "This approval added automatically"
-      - name: Merge PR as GH Actions bot
-        env:
-           GH_TOKEN: ${{ github.token }}
-        run: |
           gh pr merge --merge --body "Merging automatically"
