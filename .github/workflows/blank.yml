@@ -23,9 +23,6 @@ jobs:
           cat version.txt
           git config --global user.email "you@example.com"
           git config --global user.name "Your Name"
-          git checkout -b auto-release
           git commit -am "Increment version"
-          git push -u origin auto-release --force
-          gh pr create --title "bump version" --body "this PR created automatically"
-          gh pr review --approve --body "This approval added automatically"
-          gh pr merge --merge --body "Merging automatically"
+          git pull --ff-only
+          git push origin
